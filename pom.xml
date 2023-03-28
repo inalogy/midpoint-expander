@@ -6,10 +6,10 @@
 
     <groupId>com.inalogy.idm.utilities</groupId>
     <artifactId>expander</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>expander</name>
+    <name>midpoint-expander</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
