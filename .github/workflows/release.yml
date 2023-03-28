@@ -26,10 +26,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-          cache: 'maven'
       - name: Build project # This would actually build your project, using zip for an example artifact
-        run: mvn --batch-mode clean install -DskipTests=true
-        run: mv ./target/expander*jar-with-dependencies.jar ./target/midpoint-expander.jar
+        run: mvn -B package --file pom.xml -DskipTests ;  mv ./target/expander*jar-with-dependencies.jar ./target/midpoint-expander.jar
       - name: Upload Connector
         uses: actions/upload-artifact@v3
         with:
