@@ -5,6 +5,31 @@ Tested on JDK 17.
 
 ## Help (java -jar expander.jar -h)
 ```
+Usage: java -jar expander.jar [options] [command] [command options]
+  Options:
+    -c, --charset
+
+      Default: utf-8
+    -h, --help
+
+    -s, --silent
+
+      Default: false
+    -v, --verbose
+
+      Default: false
+    -V, --version
+
+      Default: false
+  Commands:
+    expand
+      Usage: expand [options]
+        Options:
+        * -e, --extension
+
+        * -p, --properties-file
+
+        * -w, --working-directory
 
 ```
 
@@ -17,29 +42,22 @@ Resulting build file can be found in `target/expander-{{version}}-jar-with-depen
 ## Usage
 **Files structure**
 ```
-tmp/
-    input-map.csv
-    
-server-files/
-    server-a.xlsx
-    server-b.xlsx
-    other-servers/
-        other-server-a.xls
-        other-server-b.xlsm
-    lost.csv
-    README.md
-
-role-files/
+workfiles/
+    working-directory/
+        resource-ad.xml
+        resource-crm-core.xml
+    arbitrary.properties
 ```
 **Content of arbitrary.properties file**
 ```
-
+crmcore.virtualPageSize=1
+crmcore.allowToRenameFunctions=false
+crmcore.attribute.state.strength=weak
 ```
 ### Expand action
-Following command will process and edit these files: server-a.xlsx, server-b.xlsx, other-server-a.xls, other-serve-b.xlsm; 
-replacing all dynamically generated oids with excel formula to static values set by input map.
+Following command will process and edit these files: resource-ad.xml, resource-crm-core.xml; 
+replacing all keys specified as $(key) based on specified properties in arbitrary.properties file.
 ```
-java -jar excel-oid-transformation-1.0-jar-with-dependencies.jar replaceOid -m /tmp/input-map.csv -t server -w /server-files
+java -jar expander-1.0-jar-with-dependencies.jar expand -e xml -w /working-directory -p arbitrary.properties
 ```
 
-Input map should be a *.csv file with two columns: old oid, new oid; separated with semicolon as a delimiter.
