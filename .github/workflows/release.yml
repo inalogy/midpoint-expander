@@ -29,11 +29,12 @@ jobs:
           cache: 'maven'
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: mvn --batch-mode clean install -DskipTests=true
+        run: mv ./target/expander*jar-with-dependencies.jar ./target/midpoint-expander.jar
       - name: Upload Connector
         uses: actions/upload-artifact@v3
         with:
           name: Midpoint Expander
-          path: ./target/expander*jar-with-dependencies.jar
+          path: ./target/midpoint-expander.jar
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -52,6 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./target/expander*jar-with-dependencies.jar
-          asset_name: expander.jar
+          asset_path: ./target/midpoint-expander.jar
+          asset_name: midpoint-expander.jar
           asset_content_type: application/java-archive
