@@ -113,7 +113,7 @@ public class Main {
         if (parsedCommand == null) {
             jc.usage();
         } else {
-            jc.usage(parsedCommand);
+            jc.getUsageFormatter().usage(parsedCommand);
         }
     }
 
